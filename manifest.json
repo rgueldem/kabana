@@ -1,0 +1,13 @@
+{
+  "name": "Kanban",
+  "author": {
+    "name": "Ralf Gueldemeister, Travers McInerney",
+    "email": "support@kabana.zendesk.com",
+    "url": "http://kabana.io"
+  },
+  "defaultLocale": "en",
+  "private": true,
+  "location": "nav_bar",
+  "version": "1.0",
+  "frameworkVersion": "1.0"
+}
