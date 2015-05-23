@@ -1,11 +1,19 @@
 (function() {
 
   return {
-    events: {
-      'app.activated':'doSomething'
+    events: require('events.js'),
+    requests: require('requests.js'),
+
+    tickets: [],
+
+    setTickets: function(data) {
+      this.tickets = data.rows.map(function(row) {
+        return row.ticket;
+      });
     },
 
-    doSomething: function() {
+    appActivated: function() {
+      this.ajax('previewTicketView').done(this.setTickets);
     }
   };
 
