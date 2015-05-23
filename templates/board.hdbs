@@ -1,0 +1,11 @@
+<div class="groups">
+  {{#each groups}}
+    {{name}}
+  {{/each}}
+</div>
+
+<div class="tickets">
+  {{#each tickets}}
+    {{subject}}
+  {{/each}}
+</div>
