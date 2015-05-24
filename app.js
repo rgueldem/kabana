@@ -43,9 +43,9 @@
 
       var dropzone = this.$(e.target).closest('.dropzone'),
           id = this.draggedEl.data('id'),
-          status = dropzone.data('status');
+          newStatus = dropzone.data('status');
 
-      console.log('Dropped ticket ' + id + ' to ' + status);
+      this.trigger('transitionTicket', { id: id, newStatus: newStatus });
 
       this.draggedEl.detach();
       this.draggedEl.appendTo(dropzone);
@@ -53,6 +53,16 @@
 
     dragoverDropzone: function(e) {
       e.preventDefault();
+    },
+
+    transitionTicket: function(e) {
+      var ticket = _.find(this.tickets, function(t) { return t.id === e.id });
+
+      if (ticket === undefined || ticket.status === e.newStatus) {
+        return;
+      }
+
+      this.ajax('updateTicket', e.id, e.newStatus);
     }
   };
 

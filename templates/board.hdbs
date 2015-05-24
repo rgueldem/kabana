@@ -4,7 +4,7 @@
   {{/each}}
 </div>
 
-<div class="tickets dropzone" data-status="new">
+<div class="tickets dropzone" data-status="open">
   {{#each tickets}}
     <div class="ticket" draggable="true" data-id="{{id}}">
       {{subject}}
@@ -12,5 +12,5 @@
   {{/each}}
 </div>
 
-<div class="tickets dropzone" data-status="open">
+<div class="tickets dropzone" data-status="pending">
 </div>
