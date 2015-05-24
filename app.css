@@ -1,16 +1,45 @@
-[draggable] {
-  -moz-user-select: none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
-
-  -khtml-user-drag: element;
-  -webkit-user-drag: element;
-
-  cursor: move;
+.main,
+.board,
+.ticket-status {
+  min-height: 100%;
+  height: 100%;
 }
 
-.dropzone {
-  height: 200px;
-  border: 1px solid red;
+.board {
+  .ticket-status {
+    h3 {
+      text-align: center;
+    }
+  }
+
+  .tickets {
+    .empty {
+      text-align: center;
+    }
+  }
+
+  .ticket {
+    &.summary {
+      -moz-user-select: none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      user-select: none;
+
+      -khtml-user-drag: element;
+      -webkit-user-drag: element;
+
+      border-left: 4px solid #e5e5e5;
+      cursor: move;
+      margin-bottom: 10px;
+
+      .subject {
+        display: block;
+        padding: 10px;
+      }
+
+      &.task {
+        border-left-color: red;
+      }
+    }
+  }
 }

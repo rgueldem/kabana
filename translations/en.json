@@ -1,54 +1,25 @@
 {
   "app": {
-    "package": "app_name",
     "description": {
-      "value": "Play the famous zen tunes in your help desk.",
-      "title": "app description"
+      "title": "app description",
+      "value": "Kanban for Zendesk"
     },
     "name": {
-      "value": "Buddha Machine",
-      "title": "app name"
+      "title": "app name",
+      "value": "Kabana"
     }
   },
 
-  "loading": {
-    "value": "Welcome to this Sample App",
-    "title": "loading placeholder"
+  "ticket_statuses": {
+    "new":     "New",
+    "open":    "Open",
+    "pending": "Pending",
+    "hold":    "Hold",
+    "solved":  "Solved",
+    "closed":  "Closed"
   },
 
-  "fetch": {
-    "done": {
-      "value": "Good",
-      "title": "fetch success"
-    },
-    "fail": {
-      "value": "failed to fecth information from the server",
-      "title": "fetch failure"
-    }
-  },
-
-  "id": {
-    "value": "ID",
-    "title": "user id"
-  },
-
-  "email": {
-    "value": "Email",
-    "title": "user email"
-  },
-
-  "name": {
-    "value": "Name",
-    "title": "user name"
-  },
-
-  "role": {
-    "value": "Role",
-    "title": "user role"
-  },
-
-  "groups": {
-    "value": "Groups",
-    "title": "user groups"
+  "tickets": {
+    "empty": "No available tickets"
   }
 }

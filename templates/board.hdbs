@@ -1,16 +1,27 @@
-<div class="groups">
-  {{#each groups}}
-    {{name}}
-  {{/each}}
-</div>
+<div class="board row-fluid">
+  <!-- <div class="">
+    <div class="groups">
+      {{#each groups}}
+        {{name}}
+      {{/each}}
+    </div>
+  </div> -->
 
-<div class="tickets dropzone" data-status="open">
-  {{#each tickets}}
-    <div class="ticket" draggable="true" data-id="{{id}}">
-      {{subject}}
+  {{#each statuses}}
+    <div class="span2 ticket-status" data-status="{{value}}">
+      <header>
+        <h3>{{title}}</h3>
+      </header>
+      <div class="tickets">
+        {{#unless hasTickets}}
+        <p class="empty">{{t "tickets.empty"}}</p>
+        {{/unless}}
+        {{#each tickets}}
+          <div class="summary ticket {{type}}" data-id="{{id}}" draggable="true">
+            <p class="subject"><a href="/agent/tickets/{{id}}">#{{id}}</a> {{subject}}</p>
+          </div>
+        {{/each}}
+      </div>
     </div>
   {{/each}}
-</div>
-
-<div class="tickets dropzone" data-status="pending">
 </div>
