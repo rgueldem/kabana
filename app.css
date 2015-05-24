@@ -37,8 +37,20 @@
         padding: 10px;
       }
 
+      &.incident {
+        border-left-color: #b94a48;
+      }
+
+      &.problem {
+        border-left-color: #f89406;
+      }
+
+      &.question {
+        border-left-color: #3a87ad;
+      }
+
       &.task {
-        border-left-color: red;
+        border-left-color: #468847;
       }
     }
   }
