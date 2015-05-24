@@ -10,7 +10,7 @@
   {{#each statuses}}
     <div class="span2 ticket-status" data-status="{{value}}">
       <header>
-        <h3>{{title}}</h3>
+        <h3>{{title}} <small>({{tickets.length}})</small></h3>
       </header>
       <div class="tickets">
         {{#unless hasTickets}}
