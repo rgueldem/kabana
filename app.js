@@ -1,5 +1,11 @@
 (function() {
 
+  var findById = function(list, id) {
+    return _.find(list, function(item) {
+      return item.id === id;
+    });
+  };
+
   return {
     events: require('events.js'),
     requests: require('requests.js'),
@@ -10,7 +16,9 @@
 
     setTickets: function(data) {
       this.tickets = data.rows.map(function(row) {
-        return row.ticket;
+        return _.extend(row.ticket, {
+          assignee: findById(data.users, row.assignee_id)
+        });
       });
       this.trigger('reloadBoard');
     },
@@ -56,13 +64,21 @@
     },
 
     transitionTicket: function(e) {
-      var ticket = _.find(this.tickets, function(t) { return t.id === e.id });
+      var ticket, change = {};
+
+      ticket = findById(this.tickets, e.id);
 
       if (ticket === undefined || ticket.status === e.newStatus) {
         return;
       }
 
-      this.ajax('updateTicket', e.id, e.newStatus);
+      change.status = e.newStatus;
+
+      if (ticket.assignee_id === null) {
+        change.assignee_id = this.currentUser().id();
+      }
+
+      this.ajax('updateTicket', ticket.id, change);
     }
   };
 
