@@ -28,7 +28,8 @@
       -khtml-user-drag: element;
       -webkit-user-drag: element;
 
-      border-left: 4px solid #e5e5e5;
+      $border-opactity: 0.6;
+      border-left: 4px solid rgba(130, 130, 130, $border-opactity);
       cursor: move;
       margin-bottom: 10px;
 
@@ -38,19 +39,19 @@
       }
 
       &.incident {
-        border-left-color: #b94a48;
+        border-left-color: rgba(232, 42, 42, $border-opactity);
       }
 
       &.problem {
-        border-left-color: #f89406;
+        border-left-color: rgba(245, 202, 0, $border-opactity);
       }
 
       &.question {
-        border-left-color: #3a87ad;
+        border-left-color: rgba(89, 187, 224, $border-opactity);
       }
 
       &.task {
-        border-left-color: #468847;
+        border-left-color: rgba(120, 163, 0, $border-opactity);
       }
     }
   }
