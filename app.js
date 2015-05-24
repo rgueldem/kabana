@@ -1,5 +1,8 @@
 (function() {
 
+  // Vendor libraries
+  var md5 = require('vendor/md5.js');
+
   var findById = function(list, id) {
     return _.find(list, function(item) {
       return item.id === id;
