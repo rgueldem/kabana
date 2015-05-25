@@ -18,6 +18,7 @@
     draggedEl: null,
     events: require('events.js'),
     requests: require('requests.js'),
+    sequenceField: null,
 
     getTicketStatusTranslation: function(value) {
       return {
@@ -30,9 +31,10 @@
       var ticketsGroupedByStatus = [];
       this.data.tickets = data.rows.map(function(row) {
         return _.extend(row.ticket, {
-          assignee: findById(data.users, row.assignee_id)
+          assignee: findById(data.users, row.assignee_id),
+          sequence: row[this.sequenceField]
         });
-      });
+      }.bind(this));
 
       // Associate tickets with statuses
       ticketsGroupedByStatus = _.groupBy(this.data.tickets, 'status');
@@ -59,6 +61,9 @@
     appActivated: function() {
       // Load translations for ticket statuses
       this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
+
+      // fallback value for development environment
+      this.sequenceField = this.requirement('sequence')|| 26013118;
 
       this.ajax('previewTicketView');
       this.ajax('getAssignableGroups');
