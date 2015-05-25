@@ -41,7 +41,6 @@
       this.data.statuses     = this.data.statuses.map(function(status) {
         var tickets = ticketsGroupedByStatus[status.value] || [];
         return _.extend(status, {
-          hasTickets: tickets.length > 0,
           tickets: tickets
         });
       });

@@ -13,13 +13,17 @@
         <h3>{{title}} <small>({{tickets.length}})</small></h3>
       </header>
       <div class="tickets">
-        {{#unless hasTickets}}
+        {{#unless tickets}}
         <p class="empty">{{t "tickets.empty"}}</p>
         {{/unless}}
         {{#each tickets}}
-          <div class="summary ticket {{type}}" data-id="{{id}}" draggable="true">
-            <p class="subject"><a href="/agent/tickets/{{id}}">#{{id}}</a> {{subject}}</p>
-          </div>
+        <div class="clearfix summary ticket {{type}}" data-id="{{id}}" draggable="true">
+          <p class="subject"><a href="/agent/tickets/{{id}}">#{{id}}</a> {{subject}}</p>
+          <p class="hidden description">{{description}}</p>
+          {{#if assignee}}
+          <a class="assignee pull-right" href="/agent/users/{{assignee.id}}"><img src="" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
+          {{/if}}
+        </div>
         {{/each}}
       </div>
     </div>

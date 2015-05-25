@@ -33,11 +33,6 @@
       cursor: move;
       margin-bottom: 10px;
 
-      .subject {
-        display: block;
-        padding: 10px;
-      }
-
       &.incident {
         border-left-color: rgba(232, 42, 42, $border-opactity);
       }
@@ -52,6 +47,20 @@
 
       &.task {
         border-left-color: rgba(120, 163, 0, $border-opactity);
+      }
+
+      .assignee {
+        &,
+        img {
+          $size: 35px;
+          height: $size;
+          width: $size;
+        }
+      }
+
+      .subject {
+        display: block;
+        padding: 10px;
       }
     }
   }
