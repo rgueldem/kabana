@@ -15,7 +15,7 @@
       tickets: [],
       statuses: [ 'new', 'open', 'pending', 'hold', 'solved', 'closed' ]
     },
-    draggedEl: null,
+    dragdrop: require('dragdrop.js'),
     events: require('events.js'),
     requests: require('requests.js'),
     sequenceField: null,
@@ -69,27 +69,6 @@
       this.ajax('getAssignableGroups');
     },
 
-    dragTicket: function(e) {
-      this.draggedEl = this.$(e.target);
-    },
-
-    dropTicket: function(e) {
-      e.preventDefault();
-
-      var dropzone = this.$(e.target).closest('.ticket-status'),
-          id = this.draggedEl.data('id'),
-          newStatus = dropzone.data('status');
-
-      this.trigger('transitionTicket', { id: id, newStatus: newStatus });
-
-      this.draggedEl.detach();
-      this.draggedEl.appendTo(dropzone);
-    },
-
-    dragoverDropzone: function(e) {
-      e.preventDefault();
-    },
-
     transitionTicket: function(e) {
       var ticket, change = {};
 
@@ -99,10 +78,10 @@
         return;
       }
 
-      change.status = e.newStatus;
+      ticket.status = change.status = e.newStatus;
 
       if (ticket.assignee_id === null) {
-        change.assignee_id = this.currentUser().id();
+        ticket.assignee_id = change.assignee_id = this.currentUser().id();
       }
 
       this.ajax('updateTicket', ticket.id, change);
