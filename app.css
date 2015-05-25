@@ -30,6 +30,7 @@
 
       $border-opactity: 0.6;
       border-left: 4px solid rgba(130, 130, 130, $border-opactity);
+      box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.2);
       cursor: move;
       margin-bottom: 10px;
 
@@ -50,9 +51,12 @@
       }
 
       .assignee {
+        margin: 0 10px 10px;
+
         &,
         img {
           $size: 35px;
+          border: 0;
           height: $size;
           width: $size;
         }
