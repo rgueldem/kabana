@@ -2,12 +2,7 @@
 
   // Vendor libraries
   var md5 = require('vendor/md5.js');
-
-  var findById = function(list, id) {
-    return _.find(list, function(item) {
-      return item.id === id;
-    });
-  };
+  var Big = require('vendor/big.js');
 
   return {
     data: {
@@ -17,8 +12,9 @@
     },
     dragdrop: require('dragdrop.js'),
     events: require('events.js'),
+    positionField: null,
     requests: require('requests.js'),
-    sequenceField: null,
+    ticket: require('ticket.js'),
 
     getTicketStatusTranslation: function(value) {
       return {
@@ -27,12 +23,18 @@
       };
     },
 
+    sortTickets: function(tickets) {
+      tickets.sort(function(a, b) {
+        return a.position.cmp(b.position);
+      });
+    },
+
     setTickets: function(data) {
       var ticketsGroupedByStatus = [];
       this.data.tickets = data.rows.map(function(row) {
         return _.extend(row.ticket, {
-          assignee: findById(data.users, row.assignee_id),
-          sequence: row[this.sequenceField]
+          assignee: _.findWhere(data.users, { id: row.assignee_id }),
+          position: new Big(row[this.positionField] || 0)
         });
       }.bind(this));
 
@@ -40,10 +42,12 @@
       ticketsGroupedByStatus = _.groupBy(this.data.tickets, 'status');
       this.data.statuses     = this.data.statuses.map(function(status) {
         var tickets = ticketsGroupedByStatus[status.value] || [];
+        this.sortTickets(tickets);
+
         return _.extend(status, {
           tickets: tickets
         });
-      });
+      }.bind(this));
 
       this.trigger('reloadBoard');
     },
@@ -62,29 +66,11 @@
       this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
 
       // fallback value for development environment
-      this.sequenceField = this.requirement('sequence')|| 26013118;
+      this.positionField = this.requirement('position')|| 26034977;
 
       this.ajax('previewTicketView');
       this.ajax('getAssignableGroups');
     },
-
-    transitionTicket: function(e) {
-      var ticket, change = {};
-
-      ticket = findById(this.data.tickets, e.id);
-
-      if (ticket === undefined || ticket.status === e.newStatus) {
-        return;
-      }
-
-      ticket.status = change.status = e.newStatus;
-
-      if (ticket.assignee_id === null) {
-        ticket.assignee_id = change.assignee_id = this.currentUser().id();
-      }
-
-      this.ajax('updateTicket', ticket.id, change);
-    }
   };
 
 }());

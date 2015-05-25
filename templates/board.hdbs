@@ -8,7 +8,7 @@
   </div> -->
 
   {{#each statuses}}
-    <div class="span2 ticket-status" data-status="{{value}}">
+    <div class="span2 ticket-status" data-status="{{@index}}">
       <header>
         <h3>{{title}} <small>({{tickets.length}})</small></h3>
       </header>

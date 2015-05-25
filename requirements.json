@@ -1,8 +1,8 @@
 {
   "ticket_fields": {
-    "sequence": {
-      "type": "integer",
-      "title": "Kabana Sequence"
+    "position": {
+      "type": "decimal",
+      "title": "Kabana Position"
     }
   }
 }
