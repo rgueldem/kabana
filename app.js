@@ -23,19 +23,16 @@
       };
     },
 
-    sortTickets: function(tickets) {
-      tickets.sort(function(a, b) {
-        return a.position.cmp(b.position);
-      });
-    },
-
     groupTickets: function() {
       // Associate tickets with statuses
       var ticketsGroupedByStatus = _.groupBy(this.data.tickets, 'status');
 
       this.data.statuses = this.data.statuses.map(function(status) {
         var tickets = ticketsGroupedByStatus[status.value] || [];
-        this.sortTickets(tickets);
+
+        tickets.sort(function(a, b) {
+          return a.position.cmp(b.position);
+        });
 
         return _.extend(status, {
           tickets: tickets
