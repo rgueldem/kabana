@@ -29,18 +29,11 @@
       });
     },
 
-    setTickets: function(data) {
-      var ticketsGroupedByStatus = [];
-      this.data.tickets = data.rows.map(function(row) {
-        return _.extend(row.ticket, {
-          assignee: _.findWhere(data.users, { id: row.assignee_id }),
-          position: new Big(row[this.positionField] || 0)
-        });
-      }.bind(this));
-
+    groupTickets: function() {
       // Associate tickets with statuses
-      ticketsGroupedByStatus = _.groupBy(this.data.tickets, 'status');
-      this.data.statuses     = this.data.statuses.map(function(status) {
+      var ticketsGroupedByStatus = _.groupBy(this.data.tickets, 'status');
+
+      this.data.statuses = this.data.statuses.map(function(status) {
         var tickets = ticketsGroupedByStatus[status.value] || [];
         this.sortTickets(tickets);
 
@@ -48,6 +41,17 @@
           tickets: tickets
         });
       }.bind(this));
+    },
+
+    setTickets: function(data) {
+      this.data.tickets = data.rows.map(function(row) {
+        return _.extend(row.ticket, {
+          assignee: _.findWhere(data.users, { id: row.assignee_id }),
+          position: new Big(row[this.positionField] || 0)
+        });
+      }.bind(this));
+
+      this.groupTickets();
 
       this.trigger('reloadBoard');
     },
