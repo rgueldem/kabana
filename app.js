@@ -67,7 +67,11 @@
       this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
 
       // fallback value for development environment
-      this.positionField = this.requirement('position')|| 26034977;
+      if (this.requirement('position') !== undefined) {
+        this.positionField = this.requirement('position').requirement_id;
+      } else {
+        this.positionField = 26034977;
+      }
 
       this.ajax('previewTicketView');
       this.ajax('getAssignableGroups');
