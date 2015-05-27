@@ -44,7 +44,8 @@
       this.data.tickets = data.rows.map(function(row) {
         return _.extend(row.ticket, {
           assignee: _.findWhere(data.users, { id: row.assignee_id }),
-          position: new Big(row[this.positionField] || row.ticket.id)
+          position: new Big(row[this.positionField] || row.ticket.id),
+          subject: row.subject
         });
       }.bind(this));
 
