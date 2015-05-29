@@ -15,7 +15,7 @@
     events: require('events.js'),
     positionField: null,
     requests: require('requests.js'),
-    ticket: require('ticket.js'),
+    board: require('board.js'),
 
     getTicketStatusTranslation: function(value) {
       return {
@@ -80,7 +80,7 @@
       this.switchTo('board', this.data);
     },
 
-    appActivated: function() {
+    navbarActivated: function() {
       // Load translations for ticket statuses
       this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
 
@@ -93,6 +93,17 @@
 
       this.ajax('getAssignableGroups');
     },
+
+    appActivated: function() {
+      switch(this.currentLocation()) {
+        case 'nav_bar':
+          this.navbarActivated();
+          break;
+        case 'ticket_sidebar':
+        case 'new_ticket_sidebar':
+          break;
+      }
+    }
   };
 
 }());
