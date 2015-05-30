@@ -89,6 +89,11 @@
 
     sidebarCreated: function() {
       this.ticketFields('custom_field_' + this.positionField).hide();
+      var context = {};
+      if (this.ticket().assignee().group()) {
+        context.group = this.ticket().assignee().group().name();
+      }
+      this.switchTo('sidebar', context);
     },
 
     appCreated: function() {

@@ -1,0 +1,5 @@
+{{#if group}}
+  <span class="nav nav-pills">
+    <li><a href="#apps/kabana">{{group}}</a></li>
+  </span>
+{{/if}}

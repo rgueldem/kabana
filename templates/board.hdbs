@@ -23,10 +23,10 @@
         {{/unless}}
         {{#each tickets}}
         <div class="clearfix summary ticket {{type}}" data-id="{{id}}" draggable="true">
-          <p class="subject"><a href="/agent/tickets/{{id}}">#{{id}}</a> {{subject}}</p>
+          <p class="subject"><a href="#tickets/{{id}}">#{{id}}</a> {{subject}}</p>
           <p class="hidden description">{{description}}</p>
           {{#if assignee}}
-          <a class="assignee pull-right" href="/agent/users/{{assignee.id}}"><img src="" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
+          <a class="assignee pull-right" href="#users/{{assignee.id}}"><img src="" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
           {{/if}}
         </div>
         {{/each}}
