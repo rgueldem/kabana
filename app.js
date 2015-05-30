@@ -80,10 +80,18 @@
       this.switchTo('board', this.data);
     },
 
-    navbarActivated: function() {
+    navbarCreated: function() {
       // Load translations for ticket statuses
       this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
 
+      this.ajax('getAssignableGroups');
+    },
+
+    sidebarCreated: function() {
+      this.ticketFields('custom_field_' + this.positionField).hide();
+    },
+
+    appCreated: function() {
       // fallback value for development environment
       if (this.requirement('position') !== undefined) {
         this.positionField = this.requirement('position').requirement_id;
@@ -91,16 +99,13 @@
         this.positionField = 26034977;
       }
 
-      this.ajax('getAssignableGroups');
-    },
-
-    appActivated: function() {
       switch(this.currentLocation()) {
         case 'nav_bar':
-          this.navbarActivated();
+          this.navbarCreated();
           break;
         case 'ticket_sidebar':
         case 'new_ticket_sidebar':
+          this.sidebarCreated();
           break;
       }
     }
