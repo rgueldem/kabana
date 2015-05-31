@@ -8,14 +8,14 @@
     data: {
       groups: [],
       tickets: [],
-      statuses: [ 'new', 'open', 'pending', 'hold', 'solved', 'closed' ],
-      activeGroup: 0
+      statuses: [ 'new', 'open', 'pending', 'hold', 'solved', 'closed' ]
     },
     dragdrop: require('dragdrop.js'),
     events: require('events.js'),
     positionField: null,
     requests: require('requests.js'),
     board: require('board.js'),
+    groups: require('groups.js'),
 
     getTicketStatusTranslation: function(value) {
       return {
@@ -53,27 +53,6 @@
       this.groupTickets();
 
       this.trigger('reloadBoard');
-    },
-
-    setGroups: function(data) {
-      this.data.groups = data.groups;
-      this.data.groups[this.data.activeGroup].active = true;
-
-      this.ajax('previewTicketView');
-    },
-
-    switchGroup: function(e) {
-      e.preventDefault();
-
-      this.data.groups[this.data.activeGroup].active = false;
-      this.data.activeGroup = this.$(e.target).data('group');
-      this.data.groups[this.data.activeGroup].active = true;
-
-      this.ajax('previewTicketView');
-    },
-
-    groupId: function() {
-      return this.data.groups[this.data.activeGroup].id;
     },
 
     reloadBoard: function() {
