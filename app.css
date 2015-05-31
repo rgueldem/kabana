@@ -68,4 +68,16 @@
       }
     }
   }
+
+  .ticket-drop {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+  }
+
+  .ticket-placeholder {
+    box-shadow: inset -1px -1px 10px 0 rgba(0, 0, 0, 0.2);
+    display: none;
+    margin-bottom: 10px;
+  }
 }

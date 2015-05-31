@@ -33,4 +33,10 @@
       </div>
     </div>
   {{/each}}
+
+  <div class="ticket-drop">
+  </div>
+
+  <div class="ticket-placeholder">
+  </div>
 </div>
