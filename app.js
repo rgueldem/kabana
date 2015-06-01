@@ -24,6 +24,10 @@
       };
     },
 
+    makeDroppable: function(status) {
+      status.droppable = status.value === 'new' ? false : true;
+    },
+
     groupTickets: function() {
       // Associate tickets with statuses
       var ticketsGroupedByStatus = _.groupBy(this.data.tickets, 'status');
@@ -62,6 +66,7 @@
     navbarCreated: function() {
       // Load translations for ticket statuses
       this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
+      this.data.statuses.forEach(this.makeDroppable);
 
       this.ajax('getAssignableGroups');
     },
@@ -71,7 +76,9 @@
       var context = {};
       if (this.ticket().assignee().group()) {
         context.group = this.ticket().assignee().group().name();
+        context.statuses = this.data.statuses;
       }
+
       this.switchTo('sidebar', context);
     },
 
