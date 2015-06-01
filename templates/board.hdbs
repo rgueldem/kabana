@@ -13,7 +13,7 @@
 <div class="board row-fluid">
 
   {{#each statuses}}
-    <div class="span2 ticket-status {{#if droppable}}ticket-status-drop{{/if}}" data-status="{{@index}}">
+    <div class="span3 ticket-status {{#if droppable}}ticket-status-drop{{/if}}" data-status="{{@index}}">
       <header>
         <h3>{{title}} <small>({{tickets.length}})</small></h3>
       </header>

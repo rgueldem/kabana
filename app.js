@@ -8,7 +8,7 @@
     data: {
       groups: [],
       tickets: [],
-      statuses: [ 'new', 'open', 'pending', 'hold', 'solved', 'closed' ]
+      statuses: [ 'new', 'open', 'pending', 'solved' ]
     },
     dragdrop: require('dragdrop.js'),
     events: require('events.js'),
