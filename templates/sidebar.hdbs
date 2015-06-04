@@ -1,5 +1,13 @@
 {{#if group}}
   <span class="nav nav-pills">
-    <li><a href="#apps/kabana">{{group}}</a></li>
+    <li><a href="#apps/kabana">{{group_name}}</a></li>
   </span>
 {{/if}}
+
+<div class="row-fluid">
+  {{#each statuses}}
+    <div class="span2">
+      {{title}}
+    </div>
+  {{/each}}
+</div>

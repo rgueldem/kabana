@@ -6,13 +6,14 @@
 
   return {
     data: {
+      initialized: false,
+      positionField: null,
       groups: [],
       tickets: [],
       statuses: [ 'new', 'open', 'pending', 'solved' ]
     },
     dragdrop: require('dragdrop.js'),
     events: require('events.js'),
-    positionField: null,
     requests: require('requests.js'),
     board: require('board.js'),
     groups: require('groups.js'),
@@ -49,46 +50,66 @@
       this.data.tickets = data.rows.map(function(row) {
         return _.extend(row.ticket, {
           assignee: _.findWhere(data.users, { id: row.assignee_id }),
-          position: new Big(row[this.positionField] || row.ticket.id),
+          position: new Big(row[this.data.positionField] || row.ticket.id),
           subject: row.subject
         });
       }.bind(this));
+    },
 
-      this.groupTickets();
+    fetchTickets: function() {
+      return this.ajax('previewTicketView')
+        .then(this.setTickets)
+        .then(this.groupTickets);
+    },
 
-      this.trigger('reloadBoard');
+    fetchGroups: function() {
+      return this.ajax('getAssignableGroups')
+        .then(this.groups.setGroups.bind(this));
     },
 
     reloadBoard: function() {
       this.switchTo('board', this.data);
     },
 
-    navbarCreated: function() {
+    reloadSidebar: function() {
+      this.switchTo('sidebar', this.data);
+    },
+
+    initialize: function() {
+      // fallback value for development environment
+      if (this.requirement('position') !== undefined) {
+        this.data.positionField = this.requirement('position').requirement_id;
+      } else {
+        this.data.positionField = 26034977;
+      }
+
       // Load translations for ticket statuses
       this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
       this.data.statuses.forEach(this.makeDroppable);
 
-      this.ajax('getAssignableGroups');
+      this.data.initialized = true;
+    },
+
+    navbarCreated: function() {
+      this.fetchGroups()
+        .then(this.fetchTickets)
+        .then(this.reloadBoard);
     },
 
     sidebarCreated: function() {
-      this.ticketFields('custom_field_' + this.positionField).hide();
-      var context = {};
+      this.ticketFields('custom_field_' + this.data.positionField).hide();
+
       if (this.ticket().assignee().group()) {
-        context.group = this.ticket().assignee().group().name();
-        context.statuses = this.data.statuses;
+        this.store('group_id', this.ticket().assignee().group().id());
+        this.data.group_name = this.ticket().assignee().group().name();
       }
 
-      this.switchTo('sidebar', context);
+      this.fetchTickets()
+        .then(this.reloadSidebar);
     },
 
-    appCreated: function() {
-      // fallback value for development environment
-      if (this.requirement('position') !== undefined) {
-        this.positionField = this.requirement('position').requirement_id;
-      } else {
-        this.positionField = 26034977;
-      }
+    appCreated: function(e) {
+      if (!this.data.initialized) this.initialize();
 
       switch(this.currentLocation()) {
         case 'nav_bar':
