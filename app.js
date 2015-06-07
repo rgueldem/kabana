@@ -9,6 +9,7 @@
       initialized: false,
       positionField: null,
       groups: [],
+      minimap: {},
       tickets: [],
       statuses: [ 'new', 'open', 'pending', 'solved' ]
     },
@@ -56,10 +57,32 @@
       }.bind(this));
     },
 
+    createMinimap: function() {
+      if (this.data.tickets.length === 0) return;
+
+      var max = _.max(this.data.statuses, function(status) {
+        return status.tickets.length
+      }).tickets.length;
+
+      this.data.minimap.ticketHeight = Math.floor(100/max);
+
+      this.data.minimap.statuses = this.data.statuses.map(function(status) {
+        return {
+          title: status.title,
+          active: status.value === this.ticket().status(),
+          tickets: status.tickets.map(function(ticket) {
+            return {
+              active: ticket.id === this.ticket().id()
+            }
+          }.bind(this))
+        }
+      }.bind(this));
+    },
+
     fetchTickets: function() {
       return this.ajax('previewTicketView')
         .then(this.setTickets)
-        .then(this.groupTickets);
+        .then(this.groupTickets)
     },
 
     fetchGroups: function() {
@@ -72,7 +95,7 @@
     },
 
     reloadSidebar: function() {
-      this.switchTo('sidebar', this.data);
+      this.switchTo('sidebar', this.data.minimap);
     },
 
     initialize: function() {
@@ -105,6 +128,7 @@
       }
 
       this.fetchTickets()
+        .then(this.createMinimap)
         .then(this.reloadSidebar);
     },
 
