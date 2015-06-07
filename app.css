@@ -70,8 +70,8 @@
   }
 
   .tickets {
-    height: 60px;
-    margin-bottom: 40px;
+    height: 100px;
+    margin-bottom: 5px;
   }
 
   .ticketwrap {
@@ -87,20 +87,13 @@
     }
 
     &.active {
-      height: 30px;
-      max-height: initial;
       width: 95%;
-      margin-bottom: 5px;
 
       .ticket {
         box-sizing: border-box;
         padding:10px;
-        font-size: 10px;
-        color: #08c;
-        max-height: initial;
-        height: 30px;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        max-height: 25px;
+        height: 250%;
       }
     }
   }

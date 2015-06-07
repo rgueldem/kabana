@@ -18,10 +18,8 @@
     {{#each statuses}}
       <div class="span3 tickets">
         {{#each tickets}}
-          <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{#if active}}30px;{{else}}{{../../../ticketHeight}}%{{/if}}">
-            <div class="ticket {{type}}">
-              {{#if active}}#{{id}}{{/if}}
-            </div>
+          <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{../../ticketHeight}}%">
+            <div class="ticket {{type}}"></div>
           </div>
         {{/each}}
       </div>
