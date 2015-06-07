@@ -28,27 +28,9 @@
       -khtml-user-drag: element;
       -webkit-user-drag: element;
 
-      $border-opactity: 0.6;
-      border-left: 4px solid rgba(130, 130, 130, $border-opactity);
       box-shadow: 1px 1px 10px 0 rgba(0, 0, 0, 0.2);
       cursor: move;
       margin-bottom: 10px;
-
-      &.incident {
-        border-left-color: rgba(232, 42, 42, $border-opactity);
-      }
-
-      &.problem {
-        border-left-color: rgba(245, 202, 0, $border-opactity);
-      }
-
-      &.question {
-        border-left-color: rgba(89, 187, 224, $border-opactity);
-      }
-
-      &.task {
-        border-left-color: rgba(120, 163, 0, $border-opactity);
-      }
 
       .assignee {
         margin: 0 10px 10px;
@@ -79,5 +61,68 @@
     box-shadow: inset -1px -1px 10px 0 rgba(0, 0, 0, 0.2);
     display: none;
     margin-bottom: 10px;
+  }
+}
+
+.minimap {
+  .title {
+    margin: 15px 0px 5px 0px;
+  }
+
+  .tickets {
+    height: 60px;
+    margin-bottom: 40px;
+  }
+
+  .ticketwrap {
+    box-sizing: border-box;
+    max-height: 10px;
+    width: 80%;
+
+    .ticket {
+      background-color: #fff;
+      box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.2);
+      height: 200%;
+      max-height:20px;
+    }
+
+    &.active {
+      height: 30px;
+      max-height: initial;
+      width: 95%;
+      margin-bottom: 5px;
+
+      .ticket {
+        box-sizing: border-box;
+        padding:10px;
+        font-size: 10px;
+        color: #08c;
+        max-height: initial;
+        height: 30px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
+
+.ticket {
+  $border-opactity: 0.6;
+  border-left: 4px solid rgba(130, 130, 130, $border-opactity);
+
+  &.incident {
+    border-left-color: rgba(232, 42, 42, $border-opactity);
+  }
+
+  &.problem {
+    border-left-color: rgba(245, 202, 0, $border-opactity);
+  }
+
+  &.question {
+    border-left-color: rgba(89, 187, 224, $border-opactity);
+  }
+
+  &.task {
+    border-left-color: rgba(120, 163, 0, $border-opactity);
   }
 }

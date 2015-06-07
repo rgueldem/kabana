@@ -57,32 +57,24 @@
       }.bind(this));
     },
 
-    createMinimap: function() {
+    prepareMinimap: function() {
       if (this.data.tickets.length === 0) return;
 
       var max = _.max(this.data.statuses, function(status) {
-        return status.tickets.length
+        return status.tickets.length;
       }).tickets.length;
 
-      this.data.minimap.ticketHeight = Math.floor(100/max);
+      this.data.ticketHeight = Math.floor(100/max);
 
-      this.data.minimap.statuses = this.data.statuses.map(function(status) {
-        return {
-          title: status.title,
-          active: status.value === this.ticket().status(),
-          tickets: status.tickets.map(function(ticket) {
-            return {
-              active: ticket.id === this.ticket().id()
-            }
-          }.bind(this))
-        }
+      this.data.tickets.forEach(function(ticket) {
+        ticket.active = ticket.id === this.ticket().id();
       }.bind(this));
     },
 
     fetchTickets: function() {
       return this.ajax('previewTicketView')
         .then(this.setTickets)
-        .then(this.groupTickets)
+        .then(this.groupTickets);
     },
 
     fetchGroups: function() {
@@ -95,7 +87,7 @@
     },
 
     reloadSidebar: function() {
-      this.switchTo('sidebar', this.data.minimap);
+      this.switchTo('sidebar', this.data);
     },
 
     initialize: function() {
@@ -128,7 +120,7 @@
       }
 
       this.fetchTickets()
-        .then(this.createMinimap)
+        .then(this.prepareMinimap)
         .then(this.reloadSidebar);
     },
 
