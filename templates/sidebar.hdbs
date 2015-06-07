@@ -7,11 +7,16 @@
 <div class="minimap">
   <div class="row-fluid">
     {{#each statuses}}
-      <div class="span3 tickets">
+      <div class="span3">
         <div class="title">
           {{title}}
         </div>
-
+      </div>
+    {{/each}}
+  </div>
+  <div class="row-fluid">
+    {{#each statuses}}
+      <div class="span3 tickets">
         {{#each tickets}}
           <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{#if active}}30px;{{else}}{{../../../ticketHeight}}%{{/if}}">
             <div class="ticket {{type}}">
