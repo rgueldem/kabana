@@ -83,11 +83,12 @@
       background-color: #fff;
       box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.2);
       height: 200%;
-      max-height:20px;
+      max-height: 20px;
     }
 
     &.active {
-      width: 95%;
+      width: 80%;
+      margin-left: -15%;
 
       .ticket {
         box-sizing: border-box;
