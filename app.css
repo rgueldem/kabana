@@ -70,8 +70,8 @@
   }
 
   .tickets {
-    height: 100px;
-    margin-bottom: 5px;
+    height: 85px;
+    margin-bottom: 15px;
   }
 
   .ticketwrap {
@@ -79,28 +79,20 @@
     max-height: 10px;
     width: 80%;
 
-    .ticket {
+    .miniticket {
       background-color: #fff;
       box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.2);
-      height: 200%;
-      max-height: 20px;
+      height: 25px;
     }
 
     &.active {
       width: 80%;
       margin-left: -15%;
-
-      .ticket {
-        box-sizing: border-box;
-        padding:10px;
-        max-height: 25px;
-        height: 250%;
-      }
     }
   }
 }
 
-.ticket {
+.ticket, .miniticket {
   $border-opactity: 0.6;
   border-left: 4px solid rgba(130, 130, 130, $border-opactity);
 

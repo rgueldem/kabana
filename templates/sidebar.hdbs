@@ -19,7 +19,7 @@
       <div class="span3 tickets">
         {{#each tickets}}
           <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{../../ticketHeight}}%">
-            <div class="ticket {{type}}"></div>
+            <div class="miniticket {{type}}"></div>
           </div>
         {{/each}}
       </div>
