@@ -115,8 +115,9 @@
       this.ticketFields('custom_field_' + this.data.positionField).hide();
 
       if (this.ticket().assignee().group()) {
-        this.store('group_id', this.ticket().assignee().group().id());
+        this.data.group_id   = this.ticket().assignee().group().id();
         this.data.group_name = this.ticket().assignee().group().name();
+        this.store('group_id', this.data.group_id);
       }
 
       this.fetchTickets()
@@ -135,6 +136,16 @@
         case 'new_ticket_sidebar':
           this.sidebarCreated();
           break;
+      }
+    },
+
+    appRouteChanged: function(e, data) {
+      var route = data.appRoute.split(/\//);
+
+      // FIXME: set active group
+      if (route[0] === 'groups' && route.length > 1) {
+        this.store('group_id', route[1]);
+        this.fetchTickets().then(this.reloadBoard);
       }
     }
   };
