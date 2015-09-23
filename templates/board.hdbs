@@ -26,7 +26,7 @@
           <p class="subject"><a href="#tickets/{{id}}">#{{id}}</a> {{subject}}</p>
           <p class="hidden description">{{description}}</p>
           {{#if assignee}}
-          <a class="assignee pull-right" href="#users/{{assignee.id}}"><img src="" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
+          <a data-assignee-id="{{assignee.id}}" class="assignee pull-right" href="#users/{{assignee.id}}"><img src="{{assignee.avatar}}" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
           {{/if}}
         </div>
         {{/each}}
