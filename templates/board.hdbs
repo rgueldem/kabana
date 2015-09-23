@@ -24,7 +24,6 @@
         {{#each tickets}}
         <div class="clearfix summary ticket {{type}}" data-id="{{id}}" data-status="{{status}}" {{#if draggable}}draggable="true"{{/if}}>
           <p class="subject"><a href="#tickets/{{id}}">#{{id}}</a> {{subject}}</p>
-          <p class="hidden description">{{description}}</p>
           {{#if assignee}}
           <a data-assignee-id="{{assignee.id}}" class="assignee pull-right" href="#users/{{assignee.id}}"><img src="{{assignee.avatar}}" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
           {{/if}}
