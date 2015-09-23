@@ -70,6 +70,7 @@
         img {
           $size: 35px;
           border: 0;
+          border-radius: 4px;
           height: $size;
           width: $size;
         }
