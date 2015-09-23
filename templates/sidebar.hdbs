@@ -5,18 +5,18 @@
 {{/if}}
 
 <div class="minimap">
-  <div class="row-fluid">
+  <div class="row5">
     {{#each statuses}}
-      <div class="span3">
+      <div class="col">
         <div class="title">
           {{title}}
         </div>
       </div>
     {{/each}}
   </div>
-  <div class="row-fluid">
+  <div class="row5">
     {{#each statuses}}
-      <div class="span3 tickets">
+      <div class="col tickets">
         {{#each tickets}}
           <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{../../ticketHeight}}%">
             <div class="miniticket {{type}}"></div>

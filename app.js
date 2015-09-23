@@ -11,7 +11,7 @@
       groups: [],
       minimap: {},
       tickets: [],
-      statuses: [ 'new', 'open', 'pending', 'solved' ]
+      statuses: [ 'new', 'open', 'pending', 'solved', 'closed' ]
     },
     dragdrop: require('dragdrop.js'),
     events: require('events.js'),
@@ -36,6 +36,10 @@
 
       this.data.statuses = this.data.statuses.map(function(status) {
         var tickets = ticketsGroupedByStatus[status.value] || [];
+
+        tickets.forEach(function(ticket) {
+          ticket.draggable = status.value === 'closed' ? false : true;
+        });
 
         tickets.sort(function(a, b) {
           return a.position.cmp(b.position);
