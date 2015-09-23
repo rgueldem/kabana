@@ -13,7 +13,7 @@
 <div class="board row5">
 
   {{#each statuses}}
-    <div class="col ticket-status {{#if droppable}}ticket-status-drop{{/if}}" data-status="{{@index}}">
+    <div class="col ticket-status ticket-status-drop" data-index="{{@index}}" data-status="{{value}}">
       <header>
         <h3>{{title}} <small>({{tickets.length}})</small></h3>
       </header>
@@ -22,7 +22,7 @@
         <p class="empty">{{t "tickets.empty"}}</p>
         {{/unless}}
         {{#each tickets}}
-        <div class="clearfix summary ticket {{type}}" data-id="{{id}}" {{#if draggable}}draggable="true"{{/if}}>
+        <div class="clearfix summary ticket {{type}}" data-id="{{id}}" data-status="{{status}}" {{#if draggable}}draggable="true"{{/if}}>
           <p class="subject"><a href="#tickets/{{id}}">#{{id}}</a> {{subject}}</p>
           <p class="hidden description">{{description}}</p>
           {{#if assignee}}
