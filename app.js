@@ -48,32 +48,60 @@
       }.bind(this));
     },
 
+    renderAvatarForTicket: function(user) {
+      var $img = this.$('[data-assignee-id=' + user.id + ']').find('img');
+      $img.attr('src', user.avatar);
+    },
+
+    fetchAvatarForTicket: function(userId) {
+      var user = this.data.users[userId];
+
+      if (user === undefined) {
+        return this.promise(function(done, fail) {
+          // Exit early if there is no assigned user
+          if (userId === null) { fail(); return; }
+
+          this.ajax('getUserById', userId)
+            .done(function(response) {
+              var user = response.user;
+              if (user.photo) {
+                user.avatar = user.photo.thumbnails[0].content_url;
+              } else {
+                user.avatar = "//www.gravatar.com/avatar/%@".fmt(md5(user.email));
+              }
+
+              this.data.users[userId] = user;
+              done(user);
+            }.bind(this));
+          });
+      } else {
+        return this.promise(function(done) {
+          done(user);
+        });
+      }
+    },
+
     setTickets: function(data) {
       this.data.tickets = data.rows.map(function(row) {
-        if (row.assignee_id !== null && !this.data.users[row.assignee_id]) {
-          // Initialize to an empty object, to avoid additional AJAX calls
-          this.data.users[row.assignee_id] = {};
-          this.ajax('getUserById', row.assignee_id).done(function(response) {
-            var user = response.user;
-
-            if (user.photo) {
-              user.avatar = user.photo.thumbnails[0].content_url;
-            } else {
-              user.avatar = "//www.gravatar.com/avatar/%@".fmt(md5(user.email));
-            }
-
-            var $img = this.$('[data-assignee-id=' + user.id + ']').find('img');
-            $img.attr('src', user.avatar);
-
-            this.data.users[user.id] = user;
-          }.bind(this));
-        }
-
         return _.extend(row.ticket, {
           assignee: _.findWhere(data.users, { id: row.assignee_id }),
           position: new Big(row[this.data.positionField] || row.ticket.id),
           subject: row.subject
         });
+      }.bind(this));
+
+      // Get a unique list of assignee ids
+      var assigneeIds = _.chain(this.data.tickets)
+                         .pluck('assignee')
+                         .compact()
+                         .uniq('id')
+                         .pluck('id')
+                         .value();
+
+      // Load and cache avatars
+      _.each(assigneeIds, function(id) {
+        this.fetchAvatarForTicket(id)
+            .then(this.renderAvatarForTicket.bind(this));
       }.bind(this));
     },
 
