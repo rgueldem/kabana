@@ -99,7 +99,7 @@
 
     fetchGroups: function() {
       return this.ajax('getAssignableGroups')
-        .then(this.groups.setGroups.bind(this));
+        .then(this.groups.setGroups);
     },
 
     reloadBoard: function() {
@@ -159,12 +159,12 @@
     },
 
     appRouteChanged: function(e, data) {
-      var route = data.appRoute.split(/\//);
+      var route = data.appRoute.split(/\//),
+          groupId;
 
-      // FIXME: set active group
       if (route[0] === 'groups' && route.length > 1) {
-        this.store('group_id', route[1]);
-        this.fetchTickets().then(this.reloadBoard);
+        groupId = parseInt(route[1], 10);
+        this.trigger('switchGroup', groupId);
       }
     }
   };
