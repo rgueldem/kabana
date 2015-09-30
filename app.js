@@ -192,7 +192,10 @@
 
       if (route[0] === 'groups' && route.length > 1) {
         groupId = parseInt(route[1], 10);
-        this.trigger('switchGroup', groupId);
+
+        this.fetchGroups().then(function() {
+          this.trigger('switchGroup', groupId);
+        });
       }
     }
   };

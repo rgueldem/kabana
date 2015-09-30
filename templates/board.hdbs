@@ -3,7 +3,7 @@
     <ul class="groups nav nav-pills">
       {{#each groups}}
         <li class="{{#if active}}active{{/if}}">
-          <a href="#" class="group-nav" data-group="{{id}}">{{name}}</a>
+          <a href="#apps/kabana/groups/{{id}}">{{name}}</a>
         </li>
       {{/each}}
     </ul>
