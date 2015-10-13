@@ -39,7 +39,7 @@
         });
 
         tickets.sort(function(a, b) {
-          return a.position.cmp(b.position);
+          return b.position.cmp(a.position);
         });
 
         return _.extend(status, {
@@ -85,7 +85,7 @@
       this.data.tickets = data.rows.map(function(row) {
         return _.extend(row.ticket, {
           assignee: _.findWhere(data.users, { id: row.assignee_id }),
-          position: new Big(row[this.data.positionField] || row.ticket.id),
+          position: new Big(row[this.data.positionField] || -row.ticket.id),
           subject: row.subject
         });
       }.bind(this));
