@@ -27,27 +27,6 @@
       };
     },
 
-    groupTickets: function() {
-      // Associate tickets with statuses
-      var ticketsGroupedByStatus = _.groupBy(this.data.tickets, 'status');
-
-      this.data.statuses = this.data.statuses.map(function(status) {
-        var tickets = ticketsGroupedByStatus[status.value] || [];
-
-        tickets.forEach(function(ticket) {
-          ticket.draggable = status.value === 'closed' ? false : true;
-        });
-
-        tickets.sort(function(a, b) {
-          return b.position.cmp(a.position);
-        });
-
-        return _.extend(status, {
-          tickets: tickets
-        });
-      }.bind(this));
-    },
-
     renderAvatarForTicket: function(user) {
       var $img = this.$('[data-assignee-id=' + user.id + ']').find('img');
       $img.attr('src', user.avatar);
@@ -81,28 +60,41 @@
       }
     },
 
-    setTickets: function(data) {
-      this.data.tickets = data.rows.map(function(row) {
-        return _.extend(row.ticket, {
-          assignee: _.findWhere(data.users, { id: row.assignee_id }),
-          position: new Big(row[this.data.positionField] || -row.ticket.id),
-          subject: row.subject
-        });
-      }.bind(this));
-
+    fetchAvatarsForTickets: function() {
       // Get a unique list of assignee ids
-      var assigneeIds = _.chain(this.data.tickets)
-                         .pluck('assignee')
-                         .compact()
-                         .uniq('id')
-                         .pluck('id')
-                         .value();
+      var assigneeIds = []
+      this.data.statuses.forEach(function(status) {
+        assigneeIds.push(_.chain(status.tickets).pluck('assignee').pluck('id').value());
+      });
+
+      assigneeIds = _.chain(assigneeIds).flatten().compact().uniq().value();
 
       // Load and cache avatars
       _.each(assigneeIds, function(id) {
         this.fetchAvatarForTicket(id)
             .then(this.renderAvatarForTicket.bind(this));
       }.bind(this));
+    },
+
+    setTickets: function(index, data) {
+      var tickets,
+          status = this.data.statuses[index],
+          draggable = status.value === 'closed' ? false : true;
+
+      tickets = data.rows.map(function(row) {
+        return _.extend(row.ticket, {
+          assignee: _.findWhere(data.users, { id: row.assignee_id }),
+          position: new Big(row[this.data.positionField] || -row.ticket.id),
+          subject: row.subject,
+          draggable: draggable
+        });
+      }.bind(this));
+
+      tickets.sort(function(a, b) {
+        return b.position.cmp(a.position);
+      });
+
+      status.tickets = tickets;
     },
 
     prepareMinimap: function() {
@@ -120,9 +112,12 @@
     },
 
     fetchTickets: function() {
-      return this.ajax('previewTicketView')
-        .then(this.setTickets)
-        .then(this.groupTickets);
+      var promises = this.data.statuses.map(function(status, i) {
+        return this.ajax('previewTicketView', status.value)
+          .then(this.setTickets.bind(this, i))
+      }.bind(this));
+
+      return this.when.apply(this, promises);
     },
 
     fetchGroups: function() {
@@ -131,7 +126,9 @@
     },
 
     reloadBoard: function() {
+      // break up to support reloading individual colummns via rendering 'partials'
       this.switchTo('board', this.data);
+      this.fetchAvatarsForTickets();
     },
 
     reloadSidebar: function() {
@@ -155,7 +152,7 @@
     navbarCreated: function() {
       this.fetchGroups()
         .then(this.fetchTickets)
-        .then(this.reloadBoard);
+        .then(this.reloadBoard.bind(this));
     },
 
     sidebarCreated: function() {
