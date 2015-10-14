@@ -102,7 +102,7 @@
         return status.tickets.length;
       }).tickets.length;
 
-      if (max == 0) return;
+      if (max === 0) return;
 
       this.data.ticketHeight = Math.floor(100/max);
 
