@@ -98,16 +98,18 @@
     },
 
     prepareMinimap: function() {
-      if (this.data.tickets.length === 0) return;
-
       var max = _.max(this.data.statuses, function(status) {
         return status.tickets.length;
       }).tickets.length;
 
+      if (max == 0) return;
+
       this.data.ticketHeight = Math.floor(100/max);
 
-      this.data.tickets.forEach(function(ticket) {
-        ticket.active = ticket.id === this.ticket().id();
+      this.data.statuses.forEach(function(status) {
+        status.tickets.forEach(function(ticket) {
+          ticket.active = ticket.id === this.ticket().id();
+        }.bind(this));
       }.bind(this));
     },
 
@@ -165,8 +167,8 @@
       }
 
       this.fetchTickets()
-        .then(this.prepareMinimap)
-        .then(this.reloadSidebar);
+        .then(this.prepareMinimap.bind(this))
+        .then(this.reloadSidebar.bind(this));
     },
 
     appCreated: function(e) {
