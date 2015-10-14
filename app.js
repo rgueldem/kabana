@@ -62,7 +62,7 @@
 
     fetchAvatarsForTickets: function() {
       // Get a unique list of assignee ids
-      var assigneeIds = []
+      var assigneeIds = [];
       this.data.statuses.forEach(function(status) {
         assigneeIds.push(_.chain(status.tickets).pluck('assignee').pluck('id').value());
       });
@@ -114,7 +114,7 @@
     fetchTickets: function() {
       var promises = this.data.statuses.map(function(status, i) {
         return this.ajax('previewTicketView', status.value)
-          .then(this.setTickets.bind(this, i))
+          .then(this.setTickets.bind(this, i));
       }.bind(this));
 
       return this.when.apply(this, promises);
