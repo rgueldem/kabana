@@ -86,15 +86,20 @@
           assignee: _.findWhere(data.users, { id: row.assignee_id }),
           position: new Big(row[this.data.positionField] || -row.ticket.id),
           subject: row.subject,
-          draggable: draggable
+          draggable: draggable,
+          statusIndex: index
         });
       }.bind(this));
 
+      this.sortTickets(tickets);
+
+      status.tickets = tickets;
+    },
+
+    sortTickets: function(tickets) {
       tickets.sort(function(a, b) {
         return b.position.cmp(a.position);
       });
-
-      status.tickets = tickets;
     },
 
     prepareMinimap: function() {
