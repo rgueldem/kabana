@@ -13,7 +13,7 @@
 <div class="board row5">
 
   {{#each statuses}}
-    <div class="col ticket-status ticket-status-drop" data-index="{{@index}}" data-status="{{value}}">
+    <div class="col ticket-status ticket-status-drop" data-index="{{@index}}" data-unassignable="{{unassignable}}">
       <header>
         <h3>{{title}} <small>({{tickets.length}})</small></h3>
       </header>

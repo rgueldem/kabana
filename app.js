@@ -11,7 +11,25 @@
       groups: [],
       minimap: {},
       tickets: [],
-      statuses: [ 'new', 'open', 'pending', 'solved', 'closed' ],
+      statuses: [
+        {
+          value: 'new',
+          unassignable: true
+        },
+        {
+          value: 'open'
+        },
+        {
+          value: 'pending'
+        },
+        {
+          value: 'solved'
+        },
+        {
+          value: 'closed',
+          readonly: true
+        }
+      ],
       users: {}
     },
     dragdrop: require('dragdrop.js'),
@@ -20,11 +38,8 @@
     board: require('board.js'),
     groups: require('groups.js'),
 
-    getTicketStatusTranslation: function(value) {
-      return {
-        'title': this.I18n.t('ticket_statuses.' + value),
-        'value': value
-      };
+    getTicketStatusTranslation: function(status) {
+      status.title = this.I18n.t('ticket_statuses.' + status.value);
     },
 
     renderAvatarForTicket: function(user) {
@@ -79,14 +94,14 @@
     setTickets: function(index, data) {
       var tickets,
           status = this.data.statuses[index],
-          draggable = status.value === 'closed' ? false : true;
+          readonly = status.readonly === true;
 
       tickets = data.rows.map(function(row) {
         return _.extend(row.ticket, {
           assignee: _.findWhere(data.users, { id: row.assignee_id }),
           position: new Big(row[this.data.positionField] || -row.ticket.id),
           subject: row.subject,
-          draggable: draggable,
+          draggable: !readonly,
           statusIndex: index
         });
       }.bind(this));
@@ -143,6 +158,8 @@
     },
 
     initialize: function() {
+      this.dragdrop.initialize(this);
+
       // fallback value for development environment
       if (this.requirement('position') !== undefined) {
         this.data.positionField = this.requirement('position').requirement_id;
@@ -151,7 +168,7 @@
       }
 
       // Load translations for ticket statuses
-      this.data.statuses = this.data.statuses.map(this.getTicketStatusTranslation.bind(this));
+      this.data.statuses.forEach(this.getTicketStatusTranslation.bind(this));
 
       this.data.initialized = true;
     },
