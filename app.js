@@ -9,7 +9,6 @@
       initialized: false,
       positionField: null,
       groups: [],
-      minimap: {},
       tickets: [],
       statuses: [
         {
@@ -37,6 +36,7 @@
     requests: require('requests.js'),
     board: require('board.js'),
     groups: require('groups.js'),
+    minimap: require('minimap.js'),
 
     getTicketStatusTranslation: function(status) {
       status.title = this.I18n.t('ticket_statuses.' + status.value);
@@ -117,22 +117,6 @@
       });
     },
 
-    prepareMinimap: function() {
-      var max = _.max(this.data.statuses, function(status) {
-        return status.tickets.length;
-      }).tickets.length;
-
-      if (max === 0) return;
-
-      this.data.ticketHeight = Math.floor(100/max);
-
-      this.data.statuses.forEach(function(status) {
-        status.tickets.forEach(function(ticket) {
-          ticket.active = ticket.id === this.ticket().id();
-        }.bind(this));
-      }.bind(this));
-    },
-
     fetchTickets: function() {
       var promises = this.data.statuses.map(function(status, i) {
         return this.ajax('previewTicketView', status.value)
@@ -154,12 +138,10 @@
     },
 
     reloadSidebar: function() {
-      this.switchTo('sidebar', this.data);
+      this.switchTo('sidebar', this.minimap);
     },
 
     initialize: function() {
-      this.dragdrop.initialize(this);
-
       // fallback value for development environment
       if (this.requirement('position') !== undefined) {
         this.data.positionField = this.requirement('position').requirement_id;
@@ -174,6 +156,8 @@
     },
 
     navbarCreated: function() {
+      this.dragdrop.initialize(this);
+
       this.fetchGroups()
         .then(this.fetchTickets)
         .then(this.reloadBoard.bind(this));
@@ -181,15 +165,14 @@
 
     sidebarCreated: function() {
       this.ticketFields('custom_field_' + this.data.positionField).hide();
+      this.minimap.initialize(this);
 
       if (this.ticket().assignee().group()) {
-        this.data.group_id   = this.ticket().assignee().group().id();
-        this.data.group_name = this.ticket().assignee().group().name();
-        this.store('group_id', this.data.group_id);
+        this.store('group_id', this.ticket().assignee().group().id());
       }
 
       this.fetchTickets()
-        .then(this.prepareMinimap.bind(this))
+        .then(this.minimap.prepare.bind(this.minimap))
         .then(this.reloadSidebar.bind(this));
     },
 

@@ -18,7 +18,7 @@
     {{#each statuses}}
       <div class="col tickets">
         {{#each tickets}}
-          <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{../../ticketHeight}}%">
+          <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{height}}%">
             <div class="miniticket {{type}}"></div>
           </div>
         {{/each}}
