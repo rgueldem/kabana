@@ -2,14 +2,12 @@
 
   // Vendor libraries
   var md5 = require('vendor/md5.js');
-  var Big = require('vendor/big.js');
 
   return {
     data: {
       initialized: false,
       positionField: null,
       groups: [],
-      tickets: [],
       statuses: [
         {
           value: 'new',
@@ -34,9 +32,10 @@
     dragdrop: require('dragdrop.js'),
     events: require('events.js'),
     requests: require('requests.js'),
+    tickets: require('tickets.js'),
     board: require('board.js'),
     groups: require('groups.js'),
-    minimap: require('minimap.js'),
+    sidebar: require('sidebar.js'),
 
     getTicketStatusTranslation: function(status) {
       status.title = this.I18n.t('ticket_statuses.' + status.value);
@@ -78,9 +77,9 @@
     fetchAvatarsForTickets: function() {
       // Get a unique list of assignee ids
       var assigneeIds = [];
-      this.data.statuses.forEach(function(status) {
-        assigneeIds.push(_.chain(status.tickets).pluck('assignee').pluck('id').value());
-      });
+      this.data.statuses.forEach(function(status, index) {
+        assigneeIds.push(_.chain(this.tickets.byStatus[index]).pluck('assignee').pluck('id').value());
+      }.bind(this));
 
       assigneeIds = _.chain(assigneeIds).flatten().compact().uniq().value();
 
@@ -91,41 +90,6 @@
       }.bind(this));
     },
 
-    setTickets: function(index, data) {
-      var tickets,
-          status = this.data.statuses[index],
-          readonly = status.readonly === true;
-
-      tickets = data.rows.map(function(row) {
-        return _.extend(row.ticket, {
-          assignee: _.findWhere(data.users, { id: row.assignee_id }),
-          position: new Big(row[this.data.positionField] || -row.ticket.id),
-          subject: row.subject,
-          draggable: !readonly,
-          statusIndex: index
-        });
-      }.bind(this));
-
-      this.sortTickets(tickets);
-
-      status.tickets = tickets;
-    },
-
-    sortTickets: function(tickets) {
-      tickets.sort(function(a, b) {
-        return b.position.cmp(a.position);
-      });
-    },
-
-    fetchTickets: function() {
-      var promises = this.data.statuses.map(function(status, i) {
-        return this.ajax('previewTicketView', status.value)
-          .then(this.setTickets.bind(this, i));
-      }.bind(this));
-
-      return this.when.apply(this, promises);
-    },
-
     fetchGroups: function() {
       return this.ajax('getAssignableGroups')
         .then(this.groups.setGroups);
@@ -133,12 +97,13 @@
 
     reloadBoard: function() {
       // break up to support reloading individual colummns via rendering 'partials'
+      this.prepareBoard()
       this.switchTo('board', this.data);
       this.fetchAvatarsForTickets();
     },
 
     reloadSidebar: function() {
-      this.switchTo('sidebar', this.minimap);
+      this.switchTo('sidebar', this.sidebar);
     },
 
     initialize: function() {
@@ -159,25 +124,23 @@
       this.dragdrop.initialize(this);
 
       this.fetchGroups()
-        .then(this.fetchTickets)
+        .then(this.tickets.fetch.bind(this.tickets))
         .then(this.reloadBoard.bind(this));
     },
 
-    sidebarCreated: function() {
-      this.ticketFields('custom_field_' + this.data.positionField).hide();
-      this.minimap.initialize(this);
-
-      if (this.ticket().assignee().group()) {
-        this.store('group_id', this.ticket().assignee().group().id());
-      }
-
-      this.fetchTickets()
-        .then(this.minimap.prepare.bind(this.minimap))
-        .then(this.reloadSidebar.bind(this));
+    prepareBoard: function() {
+      // temp until board has state
+      this.data.ticketsByStatus = this.data.statuses.map(function(status, index) {
+        return _.extend(status, {
+          tickets: this.tickets.byStatus[index]
+        });
+      }.bind(this));
     },
 
     appCreated: function(e) {
       if (!this.data.initialized) this.initialize();
+
+      this.tickets.initialize(this);
 
       switch(this.currentLocation()) {
         case 'nav_bar':
@@ -185,7 +148,7 @@
           break;
         case 'ticket_sidebar':
         case 'new_ticket_sidebar':
-          this.sidebarCreated();
+          this.sidebar.initialize(this, this);
           break;
       }
     },

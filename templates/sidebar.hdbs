@@ -1,4 +1,4 @@
-{{#if group_name}}
+{{#if group_id}}
   <span class="nav nav-pills">
     <li class="active"><a href="#apps/kabana/groups/{{group_id}}">{{group_name}}</a></li>
   </span>
@@ -6,7 +6,7 @@
 
 <div class="minimap">
   <div class="row5">
-    {{#each statuses}}
+    {{#each columns}}
       <div class="col">
         <div class="title">
           {{title}}
@@ -15,7 +15,7 @@
     {{/each}}
   </div>
   <div class="row5">
-    {{#each statuses}}
+    {{#each columns}}
       <div class="col tickets">
         {{#each tickets}}
           <div class="ticketwrap {{#if active}}active{{/if}}" style="height:{{height}}%">

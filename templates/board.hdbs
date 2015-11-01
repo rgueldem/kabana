@@ -12,7 +12,7 @@
 
 <div class="board row5">
 
-  {{#each statuses}}
+  {{#each ticketsByStatus}}
     <div class="col ticket-status ticket-status-drop" data-index="{{@index}}" data-unassignable="{{unassignable}}">
       <header>
         <h3>{{title}} <small>({{tickets.length}})</small></h3>
