@@ -1,7 +1,7 @@
 <div class="row-fluid">
   <div class="span12">
     <ul class="groups nav nav-pills">
-      {{#each groups}}
+      {{#each groups.groups}}
         <li class="{{#if active}}active{{/if}}">
           <a href="#apps/kabana/groups/{{id}}">{{name}}</a>
         </li>
