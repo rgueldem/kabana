@@ -10,7 +10,7 @@
     board: require('board.js'),
     sidebar: require('sidebar.js'),
 
-    initialize: function() {
+    appCreated: function(e) {
       if (!this.data.initialized) {
         // fallback value for development environment
         if (this.requirement('position') !== undefined) {
@@ -21,18 +21,16 @@
 
         this.data.initialized = true;
       }
-    },
-
-    appCreated: function(e) {
-      this.initialize();
 
       switch(this.currentLocation()) {
         case 'nav_bar':
           this.board.initialize(this);
+          this.board.load();
           break;
         case 'ticket_sidebar':
         case 'new_ticket_sidebar':
           this.sidebar.initialize(this);
+          this.sidebar.load();
           break;
       }
     },
