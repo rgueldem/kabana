@@ -5,7 +5,6 @@
       initialized: false,
       positionField: null
     },
-    statuses: require('statuses.js'),
     events: require('events.js'),
     requests: require('requests.js'),
     board: require('board.js'),
@@ -21,25 +20,21 @@
         }
 
         this.data.initialized = true;
-
-        return this.statuses.initialize(this);
-      } else {
-        return this.promise(function(done) { done() });
       }
     },
 
     appCreated: function(e) {
-      this.initialize().then(function() {
-        switch(this.currentLocation()) {
-          case 'nav_bar':
-            this.board.initialize(this);
-            break;
-          case 'ticket_sidebar':
-          case 'new_ticket_sidebar':
-            this.sidebar.initialize(this);
-            break;
-        }
-      }.bind(this));
+      this.initialize();
+
+      switch(this.currentLocation()) {
+        case 'nav_bar':
+          this.board.initialize(this);
+          break;
+        case 'ticket_sidebar':
+        case 'new_ticket_sidebar':
+          this.sidebar.initialize(this);
+          break;
+      }
     },
 
     appRouteChanged: function(e, data) {
