@@ -3,35 +3,13 @@
   return {
     data: {
       initialized: false,
-      positionField: null,
-      statuses: [
-        {
-          value: 'new',
-          unassignable: true
-        },
-        {
-          value: 'open'
-        },
-        {
-          value: 'pending'
-        },
-        {
-          value: 'solved'
-        },
-        {
-          value: 'closed',
-          readonly: true
-        }
-      ],
+      positionField: null
     },
+    statuses: require('statuses.js'),
     events: require('events.js'),
     requests: require('requests.js'),
     board: require('board.js'),
     sidebar: require('sidebar.js'),
-
-    getTicketStatusTranslation: function(status) {
-      status.title = this.I18n.t('ticket_statuses.' + status.value);
-    },
 
     initialize: function() {
       // fallback value for development environment
@@ -41,8 +19,7 @@
         this.data.positionField = 26034977;
       }
 
-      // Load translations for ticket statuses
-      this.data.statuses.forEach(this.getTicketStatusTranslation.bind(this));
+      this.statuses.initialize(this);
 
       this.data.initialized = true;
     },
