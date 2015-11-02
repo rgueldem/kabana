@@ -12,30 +12,34 @@
     sidebar: require('sidebar.js'),
 
     initialize: function() {
-      // fallback value for development environment
-      if (this.requirement('position') !== undefined) {
-        this.data.positionField = this.requirement('position').requirement_id;
+      if (!this.data.initialized) {
+        // fallback value for development environment
+        if (this.requirement('position') !== undefined) {
+          this.data.positionField = this.requirement('position').requirement_id;
+        } else {
+          this.data.positionField = 26034977;
+        }
+
+        this.data.initialized = true;
+
+        return this.statuses.initialize(this);
       } else {
-        this.data.positionField = 26034977;
+        return this.promise(function(done) { done() });
       }
-
-      this.statuses.initialize(this);
-
-      this.data.initialized = true;
     },
 
     appCreated: function(e) {
-      if (!this.data.initialized) this.initialize();
-
-      switch(this.currentLocation()) {
-        case 'nav_bar':
-          this.board.initialize(this);
-          break;
-        case 'ticket_sidebar':
-        case 'new_ticket_sidebar':
-          this.sidebar.initialize(this);
-          break;
-      }
+      this.initialize().then(function() {
+        switch(this.currentLocation()) {
+          case 'nav_bar':
+            this.board.initialize(this);
+            break;
+          case 'ticket_sidebar':
+          case 'new_ticket_sidebar':
+            this.sidebar.initialize(this);
+            break;
+        }
+      }.bind(this));
     },
 
     appRouteChanged: function(e, data) {

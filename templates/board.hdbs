@@ -15,12 +15,10 @@
   {{#each ticketsByStatus}}
     <div class="col ticket-status ticket-status-drop" data-index="{{@index}}" data-unassignable="{{unassignable}}">
       <header>
-        <h3>{{title}} <small>({{tickets.length}})</small></h3>
+        <h3>{{title}} <small>(<span class="count"/>)</small></h3>
       </header>
       <div class="tickets">
-        {{#unless tickets}}
-        <p class="empty">{{t "tickets.empty"}}</p>
-        {{/unless}}
+        <p class="empty hidden">{{t "tickets.empty"}}</p>
         {{#each tickets}}
         <div class="clearfix summary ticket {{type}}" data-id="{{id}}" data-status="{{status}}" {{#if draggable}}draggable="true"{{/if}}>
           <p class="subject"><a href="#tickets/{{id}}">#{{id}}</a> {{subject}}</p>
