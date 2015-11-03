@@ -1,0 +1,3 @@
+{{#if avatar}}
+  <a href="#users/{{id}}"><img src="{{avatar}}" alt="{{name}}" title="{{name}}" /></a>
+{{/if}}
