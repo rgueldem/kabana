@@ -35,6 +35,11 @@
       }
     },
 
+    appWillDestroy: function(e) {
+      // seems to be a framework bug, doesn't get reinitialized unless it is null
+      this.processedRequests = null;
+    },
+
     appRouteChanged: function(e, data) {
       var route = data.appRoute.split(/\//),
           groupId;
