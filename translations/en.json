@@ -2,7 +2,7 @@
   "app": {
     "description": {
       "title": "app description",
-      "value": "Kanban for Zendesk"
+      "value": "Kanban Ticket Management"
     },
     "name": {
       "title": "app name",

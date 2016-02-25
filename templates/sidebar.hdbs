@@ -1,6 +1,6 @@
 {{#if groupId}}
   <span class="nav nav-pills">
-    <li class="active"><a href="#apps/kabana/groups/{{groupId}}">{{groupName}}</a></li>
+    <li class="active"><a href="#apps/{{appTitle}}/groups/{{groupId}}">{{groupName}}</a></li>
   </span>
 {{/if}}
 
