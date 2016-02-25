@@ -6,8 +6,8 @@
     "url": "http://kabana.io"
   },
   "defaultLocale": "en",
-  "private": true,
+  "private": false,
   "location": ["nav_bar", "ticket_sidebar", "new_ticket_sidebar"],
-  "version": "1.0",
+  "version": "1.0.1",
   "frameworkVersion": "1.0"
 }
