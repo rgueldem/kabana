@@ -5,7 +5,7 @@
 {{/if}}
 
 <div class="minimap">
-  <div class="row5">
+  <div class="row{{numColumns}}">
     {{#each columns}}
       <div class="col">
         <div class="title">
@@ -14,7 +14,7 @@
       </div>
     {{/each}}
   </div>
-  <div class="row5">
+  <div class="row{{numColumns}}">
     {{#each columns}}
       <div class="col tickets">
         {{#each tickets}}

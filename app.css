@@ -5,6 +5,18 @@
   height: 100%;
 }
 
+.row2 {
+  .col {
+    width: 49%;
+  }
+}
+
+.row3 {
+  .col {
+    width: 32%
+  }
+}
+
 .row4 {
   .col {
     width: 23.5%;
@@ -20,6 +32,30 @@
 .row6 {
   .col {
     width: 15%;
+  }
+}
+
+.row7 {
+  .col {
+    width: 12.57%;
+  }
+}
+
+.row8 {
+  .col {
+    width: 10.75%;
+  }
+}
+
+.row9 {
+  .col {
+    width: 9.33%;
+  }
+}
+
+.row10 {
+  .col {
+    width: 8.2%
   }
 }
 

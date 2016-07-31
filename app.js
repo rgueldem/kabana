@@ -16,7 +16,17 @@
         if (this.requirement('position') !== undefined) {
           this.data.positionField = this.requirement('position').requirement_id;
         } else {
-          this.data.positionField = 26034977;
+          this.data.positionField = 35373228; //26034977;
+        }
+
+        this.data.groupField = 'group_id',
+        this.data.customStatus = true;
+        if (this.data.customStatus) {
+          this.data.statusField = 33421008;
+          this.data.statusFieldName = 'ticket_fields_%@'.fmt(this.data.statusField);
+        } else {
+          this.data.statusField = 'status';
+          this.data.statusFieldName = 'status';
         }
 
         this.data.initialized = true;

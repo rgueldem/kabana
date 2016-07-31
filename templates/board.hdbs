@@ -10,7 +10,7 @@
   </div>
 </div>
 
-<div class="board row5">
+<div class="board row{{numColumns}}">
 
   {{#each columns}}
     <div class="col ticket-status ticket-status-drop" data-index="{{@index}}" data-unassignable="{{unassignable}}">
