@@ -19,12 +19,13 @@
           this.data.positionField = 35373228; //26034977;
         }
 
-        this.data.groupField = 'group_id',
-        this.data.customStatus = true;
-        if (this.data.customStatus) {
-          this.data.statusField = 33421008;
+        this.data.groupField = 'group_id';
+        if (this.setting('statusFieldId') && this.setting('statusFieldId') > 0) {
+          this.data.customStatus = true;
+          this.data.statusField = parseInt(this.setting('statusFieldId'));
           this.data.statusFieldName = 'ticket_fields_%@'.fmt(this.data.statusField);
         } else {
+          this.data.customStatus = false;
           this.data.statusField = 'status';
           this.data.statusFieldName = 'status';
         }
