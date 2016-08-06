@@ -12,6 +12,10 @@
       "statusFieldId": {
         "label": "Status Field ID",
         "helpText": "Optional: Enter ticket field ID to be used for columns instead of the ticket status."
+      },
+      "boardFieldId": {
+        "label": "Board Field ID",
+        "helpText": "Optional: Enter ticket field ID to be used for boards instead of the agent's assignable groups."
       }
     }
   },

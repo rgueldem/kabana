@@ -14,6 +14,10 @@
     {
       "name": "statusFieldId",
       "type": "number"
+    },
+    {
+      "name": "boardFieldId",
+      "type": "number"
     }
   ]
 }

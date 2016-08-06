@@ -19,7 +19,6 @@
           this.data.positionField = 35373228; //26034977;
         }
 
-        this.data.groupField = 'group_id';
         if (this.setting('statusFieldId') && this.setting('statusFieldId') > 0) {
           this.data.customStatus = true;
           this.data.statusField = parseInt(this.setting('statusFieldId'));
@@ -28,6 +27,16 @@
           this.data.customStatus = false;
           this.data.statusField = 'status';
           this.data.statusFieldName = 'status';
+        }
+
+        if (this.setting('boardFieldId') && this.setting('boardFieldId') > 0) {
+          this.data.customBoard = true;
+          this.data.boardField = parseInt(this.setting('boardFieldId'));
+          this.data.boardFieldName = 'ticket_fields_%@'.fmt(this.data.boardField);
+        } else {
+          this.data.customBoard = false;
+          this.data.boardField = 'group_id';
+          this.data.boardFieldName = 'group_id';
         }
 
         this.data.initialized = true;
