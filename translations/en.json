@@ -10,12 +10,12 @@
     },
     "parameters": {
       "statusFieldId": {
-        "label": "Status Field ID",
-        "helpText": "Optional: Enter ticket field ID to be used for columns instead of the ticket status."
+        "label": "Status Field",
+        "helpText": "Optional: Custom ticket field ID for workflow columns. Leave empty to use ticket status."
       },
       "boardFieldId": {
-        "label": "Board Field ID",
-        "helpText": "Optional: Enter ticket field ID to be used for boards instead of the agent's assignable groups."
+        "label": "Board Field",
+        "helpText": "Optional: Custom ticket field ID for board selection. Leave empty to use assignable groups."
       }
     }
   },

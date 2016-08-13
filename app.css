@@ -66,12 +66,20 @@
   &:first-child {
     margin-left: 0;
   }
+
+  .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
 
 .board {
+
   .ticket-status {
     h3 {
       text-align: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -122,6 +130,8 @@
       .subject {
         display: block;
         padding: 10px 60px 10px 10px;
+
+        overflow: hidden;
       }
     }
   }

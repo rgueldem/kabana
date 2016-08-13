@@ -64,7 +64,7 @@
       var route = data.appRoute.split(/\//),
           groupId;
 
-      if (route[0] === 'groups' && route.length > 1) {
+      if ((route[0] === 'groups' || route[0] === 'boards') && route.length > 1) {
         groupId = parseInt(route[1], 10);
 
         this.board.switchGroup(groupId);
