@@ -3,7 +3,7 @@
     <ul class="groups nav nav-pills">
       {{#each groups.groups}}
         <li class="{{#if active}}active{{/if}}">
-          <a href="#apps/{{../appTitle}}/boards/{{id}}">{{name}}</a>
+          <a href="apps/{{../appTitle}}/boards/{{id}}">{{name}}</a>
         </li>
       {{/each}}
     </ul>
@@ -21,10 +21,10 @@
         <p class="empty {{#if tickets}}hidden{{/if}}">{{t "tickets.empty"}}</p>
         {{#each tickets}}
         <div class="clearfix summary ticket {{type}}" data-id="{{id}}" data-status="{{status}}" {{#if draggable}}draggable="true"{{/if}}>
-          <p class="subject"><a href="#tickets/{{id}}">#{{id}}</a> {{subject}}</p>
+          <p class="subject"><a href="tickets/{{id}}">#{{id}}</a> {{subject}}</p>
           <span class="assignee pull-right">
             {{#if assignee.avatar}}
-              <a href="#users/{{assignee.id}}"><img src="{{assignee.avatar}}" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
+              <a href="users/{{assignee.id}}"><img src="{{assignee.avatar}}" alt="{{assignee.name}}" title="{{assignee.name}}" /></a>
             {{/if}}
           </span>
         </div>
