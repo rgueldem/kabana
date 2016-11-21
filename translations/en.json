@@ -16,6 +16,10 @@
       "boardFieldId": {
         "label": "Board Field",
         "helpText": "Optional: Custom ticket field ID for board selection. Leave empty to use assignable groups."
+      },
+      "assignOnMove": {
+        "label": "Assign Tickets",
+        "helpText": "Assign tickets to current user when moving into a new column."
       }
     }
   },
