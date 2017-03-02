@@ -1,4 +1,12 @@
-# Description
+# Overview
+
+![Kabana logo](docs/banner.png)
+
+Kabana is a free app for Zendesk. It can be installed from the [Zendesk marketplace](https://www.zendesk.com/apps/kabana/).
+
+# Documentation
+
+## Description
 
 Kabana is a Kanban board for managing your tickets. If you have ever posted sticky notes on a whiteboard, you will know how to use Kabana. It has never been easier to adopt an agile workflow.
 
@@ -18,7 +26,7 @@ Kabana also supports custom workflows. You can use a custom ticket field for the
 
 Try out Kabana today.
 
-# How To Install
+## How To Install
 
 Kabana comes with batteries included, install the app and you are ready to go!
 
@@ -32,3 +40,7 @@ Customization:
 * Custom board field: you can also choose a custom ticket field to represent the board selection. Enter the field ID during installation or in the app configuration. Leave it empty to default to the assignable groups.
 
 Kabana requires no sign-up and all your data stays within your Zendesk. When installing the app a new ticket field called ‘Kabana Position’ will be created automatically. The field is used to maintain the sequencing of tickets within a column and is hidden by default. No configuration is required from your side.
+
+# License
+
+Kabana is released under the [MIT License](LICENSE).
